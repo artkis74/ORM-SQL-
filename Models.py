@@ -2,6 +2,9 @@ import sqlalchemy
 import sqlalchemy as sq
 from sqlalchemy.orm import declarative_base, relationship, sessionmaker
 
+DSN = "postgresql://postgres:K.,bvfz777@localhost:5432/Books"
+engine = sqlalchemy.create_engine(DSN)
+
 Base = declarative_base()
 
 
@@ -18,7 +21,7 @@ class Book(Base):
     __tablename__ = "book"
 
     id = sq.Column(sq.Integer, primary_key=True)
-    title = sq.Column(String(length=60), nullable=False)
+    title = sq.Column(sq.String(length=60), nullable=False)
     publusher_id = sq.Column(sq.Integer, sq.ForeignKey("publusher.id"), nullable=False)
 
     # course = relationship(Course, back_populates="homeworks")
@@ -28,7 +31,7 @@ class Shop(Base):
     __tablename__ = "shop"
 
     id = sq.Column(sq.Integer, primary_key=True)
-    name = sq.Column(String(length=40), nullable=False)
+    name = sq.Column(sq.String(length=40), nullable=False)
 
 
 class Stok(Base):
@@ -54,5 +57,5 @@ class Sale(Base):
     stok = relationship(Stok, backref="stok")
 
 def create_tables(engine):
-    # Base.metadata.drop_all(engine)
+    Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
