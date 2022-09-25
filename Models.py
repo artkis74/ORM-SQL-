@@ -1,9 +1,12 @@
-import sqlalchemy
 import sqlalchemy as sq
 from sqlalchemy.orm import declarative_base, relationship, sessionmaker
+import os
+from dotenv import load_dotenv, find_dotenv
 
-DSN = "postgresql://postgres:K.,bvfz777@localhost:5432/Books"
-engine = sqlalchemy.create_engine(DSN)
+load_dotenv(find_dotenv())
+
+DSN = os.getenv('DSN')
+engine = sq.create_engine(DSN)
 
 Base = declarative_base()
 
@@ -57,5 +60,5 @@ class Sale(Base):
     stok = relationship(Stok, backref="stok")
 
 def create_tables(engine):
-    Base.metadata.drop_all(engine)
+    # Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)

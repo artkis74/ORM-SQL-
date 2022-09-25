@@ -6,4 +6,5 @@ if __name__ == '__main__':
     session = Session()
     # create_tables(engine)
 
+
     session.close()
